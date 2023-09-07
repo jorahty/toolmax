@@ -21,7 +21,6 @@ const render = Render.create({
     width: 800,
     height: 850,
     hasBounds: true,
-    wireframes: false,
   },
 });
 
@@ -36,10 +35,9 @@ Render.lookAt(render, {
 const leftPlayer = Bodies.rectangle(-200, 0, 40, 80, { restitution: 0.4 });
 const rightPlayer = Bodies.rectangle(200, 0, 40, 80, { restitution: 0.4 });
 const ball = Bodies.circle(-180, -100, 40, { restitution: 0.8, mass: 0.1 });
-const ground = Bodies.rectangle(0, 200, 1200, 60, { isStatic: true });
 
 // add bodies to world
-Composite.add(engine.world, [leftPlayer, rightPlayer, ball, ground]);
+Composite.add(engine.world, [leftPlayer, rightPlayer, ball]);
 
 socket.on('move', (poses) => {
   Body.setPosition(leftPlayer, { x: poses[0], y: poses[1] });
