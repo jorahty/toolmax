@@ -19,8 +19,8 @@ class CanvasGame extends FlameGame {
     cameraComponent.viewfinder.zoom = 0.5;
     addAll([cameraComponent, world]);
 
-    leftPlayer = Player();
-    rightPlayer = Player();
+    leftPlayer = Player()..x = -200;
+    rightPlayer = Player()..x = 200;
     ball = Ball();
 
     world.addAll([leftPlayer, rightPlayer, ball]);
