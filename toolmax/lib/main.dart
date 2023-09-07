@@ -52,6 +52,13 @@ class _HomeState extends State<Home> {
   }
 
   @override
+  void dispose() {
+    _socket.disconnect();
+    _socket.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Column(
       children: [
