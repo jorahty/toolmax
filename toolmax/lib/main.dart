@@ -17,7 +17,9 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
-      home: Home(),
+      home: Scaffold(
+        body: Home(),
+      ),
     );
   }
 }
@@ -42,7 +44,7 @@ class _HomeState extends State<Home> {
       IO.OptionBuilder().setTransports(['websocket']).build(),
     );
 
-    _socket.onConnect((_) => print('connect'));
+    _socket.onConnect((_) => print('connected'));
     _socket.onConnectError((msg) => print('connect error: $msg'));
     _socket.onError((msg) => print('error: $msg'));
 
