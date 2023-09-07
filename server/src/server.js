@@ -17,6 +17,10 @@ setInterval(() => {
 io.on('connect', (socket) => {
   console.log('connect!');
 
+  socket.on('msg', () => {
+    console.log('msg');
+  });
+
   socket.on('disconnect', () => {
     console.log('disconnect!');
   });
