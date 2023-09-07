@@ -16,9 +16,7 @@ void main() {
   socket.onConnectError((msg) => print('connect error: $msg'));
   socket.on('move', game.onMove);
 
-  runApp(
-    GameWidget(game: game),
-  );
+  runApp(GameWidget(game: game));
 }
 
 class CanvasGame extends FlameGame {
