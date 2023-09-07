@@ -30,14 +30,12 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  late CanvasGame _game;
   late IO.Socket _socket;
+  late CanvasGame _game;
 
   @override
   void initState() {
     super.initState();
-
-    _game = CanvasGame();
 
     _socket = IO.io(
       'http://localhost:3000',
@@ -48,6 +46,7 @@ class _HomeState extends State<Home> {
     _socket.onConnectError((msg) => print('connect error: $msg'));
     _socket.onError((msg) => print('error: $msg'));
 
+    _game = CanvasGame();
     _socket.on('move', _game.onMove);
   }
 
