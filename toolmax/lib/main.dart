@@ -6,17 +6,14 @@ import 'package:flame/game.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 
 void main() {
+  final game = CanvasGame();
+
   final IO.Socket socket = IO.io(
     'http://localhost:3000',
     IO.OptionBuilder().setTransports(['websocket']).build(),
   );
 
-  socket.onConnect((_) => print('connect'));
-  socket.onConnectError((data) => print('connect error: $data'));
-  socket.onDisconnect((_) => print('disconnect'));
-
-  final game = CanvasGame();
-
+  socket.onConnectError((msg) => print('connect error: $msg'));
   socket.on('move', game.onMove);
 
   runApp(
