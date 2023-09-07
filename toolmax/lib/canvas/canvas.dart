@@ -30,11 +30,13 @@ class CanvasGame extends FlameGame {
   }
 
   void onMove(data) {
-    leftPlayer.position.setValues(data[0], data[1]);
-    leftPlayer.angle = data[2];
-    rightPlayer.position.setValues(data[3], data[4]);
-    rightPlayer.angle = data[5];
-    ball.position.setValues(data[6], data[7]);
-    ball.angle = data[8];
+    final poses = data.map((i) => i.toDouble()).toList();
+
+    leftPlayer.position.setValues(poses[0], poses[1]);
+    leftPlayer.angle = poses[2];
+    rightPlayer.position.setValues(poses[3], poses[4]);
+    rightPlayer.angle = poses[5];
+    ball.position.setValues(poses[6], poses[7]);
+    ball.angle = poses[8];
   }
 }
