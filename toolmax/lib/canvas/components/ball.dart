@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 class Ball extends CircleComponent {
   Ball()
       : super(
-          radius: 50,
+          radius: 40,
           anchor: Anchor.center,
           paint: Paint()..color = const Color(0xffc4b3d9),
         );
