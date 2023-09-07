@@ -1,20 +1,11 @@
-import 'package:flutter/material.dart';
 import 'package:flame/components.dart';
+import 'package:flutter/material.dart';
 
-import '../canvas.dart';
-
-class Ball extends PositionComponent with HasGameRef<CanvasGame> {
-  static final _paint = Paint()..color = const Color(0xffc4b3d9);
-
-  @override
-  Future<void> onLoad() async {
-    await super.onLoad();
-
-    anchor = Anchor.center;
-  }
-
-  @override
-  void render(Canvas canvas) {
-    canvas.drawCircle(position.toOffset(), 40 * 2, _paint);
-  }
+class Ball extends CircleComponent {
+  Ball()
+      : super(
+          radius: 50,
+          anchor: Anchor.center,
+          paint: Paint()..color = const Color(0xffc4b3d9),
+        );
 }

@@ -17,14 +17,13 @@ class CanvasGame extends FlameGame {
   Future<void> onLoad() async {
     final world = World();
     final cameraComponent = CameraComponent(world: world)
-      ..viewport.position.y = -200
-      ..viewfinder.zoom = 0.4;
+      ..viewport.position.y = -120
+      ..viewfinder.zoom = 0.7;
     addAll([world, cameraComponent]);
 
+    ball = Ball();
     leftPlayer = Player(color: const Color(0xff49a581));
     rightPlayer = Player(color: const Color(0xff6f8ae4));
-    ball = Ball();
-
     world.addAll([leftPlayer, rightPlayer, ball]);
   }
 
