@@ -5,17 +5,59 @@ import 'package:flame/game.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 
 import 'canvas/canvas.dart';
+import 'controls/controls.dart';
 
 void main() {
-  final game = CanvasGame();
+  runApp(const MainApp());
+}
 
-  final IO.Socket socket = IO.io(
-    'http://localhost:3000',
-    IO.OptionBuilder().setTransports(['websocket']).build(),
-  );
+class MainApp extends StatelessWidget {
+  const MainApp({super.key});
 
-  socket.onConnectError((msg) => print('connect error: $msg'));
-  socket.on('move', game.onMove);
+  @override
+  Widget build(BuildContext context) {
+    return const MaterialApp(
+      home: Home(),
+    );
+  }
+}
 
-  runApp(GameWidget(game: game));
+class Home extends StatefulWidget {
+  const Home({super.key});
+
+  @override
+  State<Home> createState() => _HomeState();
+}
+
+class _HomeState extends State<Home> {
+  late CanvasGame _game;
+  late IO.Socket _socket;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _game = CanvasGame();
+
+    _socket = IO.io(
+      'http://localhost:3000',
+      IO.OptionBuilder().setTransports(['websocket']).build(),
+    );
+
+    _socket.onConnect((_) => print('connect'));
+    _socket.onConnectError((msg) => print('connect error: $msg'));
+    _socket.onError((msg) => print('error: $msg'));
+
+    _socket.on('move', _game.onMove);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Expanded(child: GameWidget(game: _game)),
+        Controls(socket: _socket),
+      ],
+    );
+  }
 }
