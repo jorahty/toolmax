@@ -1,3 +1,4 @@
+const logSocket = require('./util/logSocket');
 const express = require('express');
 const app = express();
 const http = require('http').Server(app);
@@ -15,13 +16,13 @@ setInterval(() => {
 
 // handle client connection
 io.on('connect', (socket) => {
-  console.log('connect!');
+  logSocket(socket);
 
   socket.on('msg', () => {
     console.log('msg');
   });
 
   socket.on('disconnect', () => {
-    console.log('disconnect!');
+    logSocket(socket);
   });
 });
