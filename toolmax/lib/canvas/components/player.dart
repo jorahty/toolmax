@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flame/components.dart';
 
-import '../canvas.dart';
+class Player extends PositionComponent {
+  Player({required this.color}) {
+    _paint = Paint()..color = color;
+  }
 
-class Player extends PositionComponent with HasGameRef<CanvasGame> {
-  static final _paint = Paint()..color = const Color(0xff49a581);
+  final Color color;
+  late final Paint _paint;
 
   @override
   Future<void> onLoad() async {

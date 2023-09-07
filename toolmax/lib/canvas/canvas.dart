@@ -6,8 +6,6 @@ import 'components/player.dart';
 import 'components/ball.dart';
 
 class CanvasGame extends FlameGame {
-  final world = World();
-  late final CameraComponent cameraComponent;
   late Player leftPlayer;
   late Player rightPlayer;
   late Ball ball;
@@ -17,16 +15,14 @@ class CanvasGame extends FlameGame {
 
   @override
   Future<void> onLoad() async {
-    await super.onLoad();
-
-    cameraComponent = CameraComponent(world: world)
+    final world = World();
+    final cameraComponent = CameraComponent(world: world)
       ..viewport.position.y = -200
       ..viewfinder.zoom = 0.4;
+    addAll([world, cameraComponent]);
 
-    addAll([cameraComponent, world]);
-
-    leftPlayer = Player();
-    rightPlayer = Player();
+    leftPlayer = Player(color: const Color(0xff49a581));
+    rightPlayer = Player(color: const Color(0xff6f8ae4));
     ball = Ball();
 
     world.addAll([leftPlayer, rightPlayer, ball]);
