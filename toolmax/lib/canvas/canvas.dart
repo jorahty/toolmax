@@ -16,18 +16,23 @@ class CanvasGame extends FlameGame {
     await super.onLoad();
 
     cameraComponent = CameraComponent(world: world);
+    cameraComponent.viewport.position.y = -200;
     cameraComponent.viewfinder.zoom = 0.5;
     addAll([cameraComponent, world]);
 
-    leftPlayer = Player()..x = -200;
-    rightPlayer = Player()..x = 200;
+    leftPlayer = Player();
+    rightPlayer = Player();
     ball = Ball();
 
     world.addAll([leftPlayer, rightPlayer, ball]);
   }
 
   void onMove(data) {
-    print(data);
-    // leftPlayer.move(Vector2(data, data));
+    leftPlayer.position.setValues(data[0], data[1]);
+    leftPlayer.angle = data[2];
+    rightPlayer.position.setValues(data[3], data[4]);
+    rightPlayer.angle = data[5];
+    ball.position.setValues(data[6], data[7]);
+    ball.angle = data[8];
   }
 }

@@ -4,7 +4,7 @@ import 'package:flame/components.dart';
 import '../canvas.dart';
 
 class Ball extends PositionComponent with HasGameRef<CanvasGame> {
-  static final _paint = Paint()..color = Colors.white;
+  static final _paint = Paint()..color = const Color(0xffc4b3d9);
 
   @override
   Future<void> onLoad() async {
@@ -15,10 +15,6 @@ class Ball extends PositionComponent with HasGameRef<CanvasGame> {
 
   @override
   void render(Canvas canvas) {
-    canvas.drawCircle(position.toOffset(), 40, _paint);
-  }
-
-  void move(Vector2 delta) {
-    position.add(delta);
+    canvas.drawCircle(position.toOffset(), 40 * 2, _paint);
   }
 }
