@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flame/game.dart';
 import 'package:flame/components.dart';
 
@@ -12,12 +13,16 @@ class CanvasGame extends FlameGame {
   late Ball ball;
 
   @override
+  Color backgroundColor() => const Color(0xff3a4260);
+
+  @override
   Future<void> onLoad() async {
     await super.onLoad();
 
-    cameraComponent = CameraComponent(world: world);
-    cameraComponent.viewport.position.y = -200;
-    cameraComponent.viewfinder.zoom = 0.5;
+    cameraComponent = CameraComponent(world: world)
+      ..viewport.position.y = -200
+      ..viewfinder.zoom = 0.4;
+
     addAll([cameraComponent, world]);
 
     leftPlayer = Player();
