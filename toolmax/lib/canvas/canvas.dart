@@ -2,13 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flame/game.dart';
 import 'package:flame/components.dart';
 
-import 'components/player.dart';
 import 'components/ball.dart';
+import 'components/player.dart';
+import 'components/arena.dart';
 
 class CanvasGame extends FlameGame {
+  late Ball ball;
   late Player leftPlayer;
   late Player rightPlayer;
-  late Ball ball;
 
   @override
   Color backgroundColor() => const Color(0xff3a4260);
@@ -24,7 +25,8 @@ class CanvasGame extends FlameGame {
     ball = Ball();
     leftPlayer = Player(color: const Color(0xff49a581));
     rightPlayer = Player(color: const Color(0xff6f8ae4));
-    world.addAll([leftPlayer, rightPlayer, ball]);
+
+    world.addAll([Arena(), ball, leftPlayer, rightPlayer]);
   }
 
   void onMove(data) {
