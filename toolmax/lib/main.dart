@@ -4,6 +4,7 @@ import 'package:flame/game.dart';
 // ignore: library_prefixes
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 
+import 'socket/uri.dart';
 import 'canvas/canvas.dart';
 import 'controls/controls.dart';
 
@@ -41,7 +42,7 @@ class _HomeState extends State<Home> {
     super.initState();
 
     _socket = IO.io(
-      'http://localhost:3000',
+      socketUri,
       IO.OptionBuilder().setTransports(['websocket']).build(),
     );
 
