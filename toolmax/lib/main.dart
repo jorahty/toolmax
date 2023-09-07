@@ -1,45 +1,65 @@
+import 'package:flame/components.dart';
 import 'package:flutter/material.dart';
+import 'package:flame/game.dart';
 
 // ignore: library_prefixes
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 
 void main() {
-  runApp(const MainApp());
-}
-
-class MainApp extends StatefulWidget {
-  const MainApp({super.key});
-
-  @override
-  State<MainApp> createState() => _MainAppState();
-}
-
-class _MainAppState extends State<MainApp> {
-  static final IO.Socket _socket = IO.io(
+  final IO.Socket socket = IO.io(
     'http://localhost:3000',
     IO.OptionBuilder().setTransports(['websocket']).build(),
   );
 
-  _connectSocket() {
-    _socket.onConnect((_) => print('Connection established'));
-    _socket.onConnectError((data) => print('Connect Error: $data'));
-    _socket.onDisconnect((_) => print('Socket. I0 server disconnected'));
+  socket.onConnect((_) => print('connect'));
+  socket.onConnectError((data) => print('connect error: $data'));
+  socket.onDisconnect((_) => print('disconnect'));
+
+  final game = CanvasGame();
+
+  socket.on('move', game.onMove);
+
+  runApp(
+    GameWidget(game: game),
+  );
+}
+
+class CanvasGame extends FlameGame {
+  late Player player;
+
+  @override
+  Future<void> onLoad() async {
+    await super.onLoad();
+
+    player = Player();
+
+    add(player);
+  }
+
+  void onMove(data) {
+    player.move(Vector2(data, data));
+  }
+}
+
+class Player extends PositionComponent with HasGameRef<CanvasGame> {
+  static final _paint = Paint()..color = Colors.white;
+
+  @override
+  Future<void> onLoad() async {
+    await super.onLoad();
+
+    position = gameRef.size / 2;
+    width = 100;
+    height = 150;
+    anchor = Anchor.center;
   }
 
   @override
-  void initState() {
-    super.initState();
-    _connectSocket();
+  void render(Canvas canvas) {
+    canvas.drawRect(size.toRect(), _paint);
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: Scaffold(
-        body: Center(
-          child: Text('Hello World!'),
-        ),
-      ),
-    );
+  void move(Vector2 delta) {
+    position.add(delta);
   }
 }
