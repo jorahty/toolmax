@@ -10,9 +10,8 @@ class Player extends PositionComponent with HasGameRef<CanvasGame> {
   Future<void> onLoad() async {
     await super.onLoad();
 
-    position = gameRef.size / 2;
-    width = 100;
-    height = 150;
+    width = 40;
+    height = 80;
     anchor = Anchor.center;
   }
 
