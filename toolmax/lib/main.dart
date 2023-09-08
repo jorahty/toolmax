@@ -56,6 +56,7 @@ class _HomeState extends State<Home> {
 
     _game = CanvasGame();
     _socket.on('move', _game.onMove);
+    _socket.on('side', _game.assignSide);
   }
 
   @override

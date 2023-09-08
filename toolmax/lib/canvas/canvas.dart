@@ -7,9 +7,12 @@ import 'components/player.dart';
 import 'components/arena.dart';
 
 class CanvasGame extends FlameGame {
+  static const zoom = 0.7;
   late Ball ball;
   late Player leftPlayer;
   late Player rightPlayer;
+  late CameraComponent cameraComponent;
+  String mySide = 'left';
 
   @override
   Color backgroundColor() => const Color(0xff3a4260);
@@ -17,9 +20,9 @@ class CanvasGame extends FlameGame {
   @override
   Future<void> onLoad() async {
     final world = World();
-    final cameraComponent = CameraComponent(world: world)
+    cameraComponent = CameraComponent(world: world)
       ..viewport.position.y = -120
-      ..viewfinder.zoom = 0.7;
+      ..viewfinder.zoom = zoom;
     addAll([world, cameraComponent]);
 
     ball = Ball();
@@ -38,5 +41,12 @@ class CanvasGame extends FlameGame {
     rightPlayer.angle = poses[5];
     ball.position.setValues(poses[6], poses[7]);
     ball.angle = poses[8];
+
+    cameraComponent.viewport.position.x =
+        (mySide == 'left' ? poses[0] : poses[3]) * -zoom;
+  }
+
+  void assignSide(side) {
+    mySide = side;
   }
 }
