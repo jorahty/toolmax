@@ -56,9 +56,15 @@ class CanvasGame extends FlameGame with MouseMovementDetector {
 
   @override
   void onMouseMove(PointerHoverInfo info) {
-    print(info.eventPosition.game);
+    final screenCenter = Vector2(
+      -cameraComponent.viewport.position.x / zoom,
+      -cameraComponent.viewport.position.y / zoom,
+    );
 
-    // double angle = myPlayer.position.angleTo(info.eventPosition.game);
-    // print(angle);
+    final inGameMousePosition =
+        screenCenter - canvasSize + info.eventPosition.game / zoom;
+
+    print(inGameMousePosition);
+    print(myPlayer.position);
   }
 }
