@@ -54,7 +54,7 @@ class _HomeState extends State<Home> {
     _socket.onConnectError((msg) => print('connect error: $msg'));
     _socket.onError((msg) => print('error: $msg'));
 
-    _game = CanvasGame();
+    _game = CanvasGame(sendAngle: (angle) => _socket.emit('a', angle));
     _socket.on('move', _game.onMove);
     _socket.on('side', _game.assignSide);
   }

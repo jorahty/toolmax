@@ -8,7 +8,12 @@ import 'components/player.dart';
 import 'components/arena.dart';
 
 class CanvasGame extends FlameGame with MouseMovementDetector {
+  CanvasGame({required this.sendAngle});
+
+  final void Function(String) sendAngle;
+
   static const zoom = 0.5;
+
   late Ball ball;
   late Player leftPlayer;
   late Player rightPlayer;
@@ -67,6 +72,6 @@ class CanvasGame extends FlameGame with MouseMovementDetector {
     final diff = inGameMousePosition - myPlayer.position;
     final angle = diff.screenAngle();
 
-    print(angle);
+    sendAngle(angle.toStringAsFixed(3));
   }
 }
