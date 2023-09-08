@@ -13,6 +13,12 @@ class Controls extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return true ? MobileControls(socket: socket) : const DesktopControls();
+    final platform = Theme.of(context).platform;
+
+    if (platform == TargetPlatform.iOS || platform == TargetPlatform.android) {
+      return MobileControls(socket: socket);
+    } else {
+      return const DesktopControls();
+    }
   }
 }
