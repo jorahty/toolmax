@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 // ignore: library_prefixes
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 
+import 'touch/dial.dart';
+import 'touch/boost.dart';
+
 class Controls extends StatelessWidget {
   const Controls({super.key, required this.socket});
 
@@ -14,10 +17,14 @@ class Controls extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: FilledButton(
-        onPressed: sendInput,
-        child: const Text('send input'),
+    return Padding(
+      padding: const EdgeInsets.all(20),
+      child: Row(
+        children: [
+          Dial(socket: socket),
+          const SizedBox(width: 20),
+          Expanded(child: BoostButton(socket: socket)),
+        ],
       ),
     );
   }
