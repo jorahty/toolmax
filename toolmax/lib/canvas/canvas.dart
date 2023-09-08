@@ -7,7 +7,7 @@ import 'components/player.dart';
 import 'components/arena.dart';
 
 class CanvasGame extends FlameGame {
-  static const zoom = 0.7;
+  static const zoom = 0.5;
   late Ball ball;
   late Player leftPlayer;
   late Player rightPlayer;
@@ -21,7 +21,7 @@ class CanvasGame extends FlameGame {
   Future<void> onLoad() async {
     final world = World();
     cameraComponent = CameraComponent(world: world)
-      ..viewport.position.y = -120
+      ..viewport.position.y = -40
       ..viewfinder.zoom = zoom;
     addAll([world, cameraComponent]);
 
