@@ -13,15 +13,32 @@ class BoostButton extends StatefulWidget {
 }
 
 class _BoostButtonState extends State<BoostButton> {
+  var isBoosting = false;
+
+  startBoost() {
+    widget.socket.emit('b');
+    setState(() {
+      isBoosting = true;
+    });
+  }
+
+  stopBoost() {
+    widget.socket.emit('B');
+    setState(() {
+      isBoosting = false;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTapDown: (_) => widget.socket.emit('b'),
-      onTapUp: (_) => widget.socket.emit('B'),
+      onTapDown: (_) => startBoost(),
+      onTapUp: (_) => stopBoost(),
+      onTapCancel: stopBoost,
       child: Container(
         height: 250,
         decoration: BoxDecoration(
-          color: const Color(0xff6f8ae4),
+          color: isBoosting ? const Color(0xff49a581) : const Color(0xff6f8ae4),
           borderRadius: BorderRadius.circular(20),
         ),
         child: const Center(
