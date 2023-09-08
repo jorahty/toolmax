@@ -17,14 +17,17 @@ class Controls extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(20),
-      child: Row(
-        children: [
-          Dial(socket: socket),
-          const SizedBox(width: 20),
-          Expanded(child: BoostButton(socket: socket)),
-        ],
+    return SafeArea(
+      top: false,
+      child: Padding(
+        padding: const EdgeInsets.all(20),
+        child: Row(
+          children: [
+            Dial(socket: socket),
+            const SizedBox(width: 20),
+            Expanded(child: BoostButton(socket: socket)),
+          ],
+        ),
       ),
     );
   }
