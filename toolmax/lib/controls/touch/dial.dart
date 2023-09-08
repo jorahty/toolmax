@@ -14,8 +14,7 @@ class Dial extends StatefulWidget {
 
 class _DialState extends State<Dial> {
   sendInput(DragUpdateDetails details) {
-    // widget.socket.emit('msg');
-    print(details.delta.dy);
+    widget.socket.emit('r', details.delta.dy / 50);
   }
 
   @override
