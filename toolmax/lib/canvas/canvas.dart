@@ -42,8 +42,10 @@ class CanvasGame extends FlameGame {
     ball.position.setValues(poses[6], poses[7]);
     ball.angle = poses[8];
 
-    cameraComponent.viewport.position.x =
-        (mySide == 'left' ? poses[0] : poses[3]) * -zoom;
+    // move camera
+    double target = (mySide == 'left' ? poses[0] : poses[3]) * -zoom;
+    double current = cameraComponent.viewport.position.x;
+    cameraComponent.viewport.position.x = current + (target - current) * 0.1;
   }
 
   void assignSide(side) {
