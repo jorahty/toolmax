@@ -18,7 +18,7 @@ class Controls extends StatelessWidget {
     if (platform == TargetPlatform.iOS || platform == TargetPlatform.android) {
       return MobileControls(socket: socket);
     } else {
-      return const DesktopControls();
+      return DesktopControls(socket: socket);
     }
   }
 }
