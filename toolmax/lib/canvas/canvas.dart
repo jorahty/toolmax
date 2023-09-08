@@ -1,18 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flame/game.dart';
 import 'package:flame/components.dart';
+import 'package:flame/events.dart';
 
 import 'components/ball.dart';
 import 'components/player.dart';
 import 'components/arena.dart';
 
-class CanvasGame extends FlameGame {
+class CanvasGame extends FlameGame with MouseMovementDetector {
   static const zoom = 0.5;
   late Ball ball;
   late Player leftPlayer;
   late Player rightPlayer;
+  late Player myPlayer;
   late CameraComponent cameraComponent;
-  String mySide = 'left';
 
   @override
   Color backgroundColor() => const Color(0xff3a4260);
@@ -28,6 +29,7 @@ class CanvasGame extends FlameGame {
     ball = Ball();
     leftPlayer = Player(color: const Color(0xff49a581));
     rightPlayer = Player(color: const Color(0xff6f8ae4));
+    myPlayer = leftPlayer;
 
     world.addAll([Arena(), ball, leftPlayer, rightPlayer]);
   }
@@ -43,12 +45,20 @@ class CanvasGame extends FlameGame {
     ball.angle = poses[8];
 
     // move camera
-    double target = (mySide == 'left' ? poses[0] : poses[3]) * -zoom;
+    double target = (myPlayer == leftPlayer ? poses[0] : poses[3]) * -zoom;
     double current = cameraComponent.viewport.position.x;
     cameraComponent.viewport.position.x = current + (target - current) * 0.1;
   }
 
   void assignSide(side) {
-    mySide = side;
+    myPlayer = (side == 'left' ? leftPlayer : rightPlayer);
+  }
+
+  @override
+  void onMouseMove(PointerHoverInfo info) {
+    print(info.eventPosition.game);
+
+    // double angle = myPlayer.position.angleTo(info.eventPosition.game);
+    // print(angle);
   }
 }
