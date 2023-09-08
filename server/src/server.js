@@ -67,15 +67,45 @@ setInterval(() => {
   );
 }, 1000 / 60);
 
+let playerLeftIsTaken = false;
+const boostStrength = 0.003;
+
 // handle client connection
 io.on('connect', (socket) => {
   logSocket(socket);
+  let player;
 
-  socket.on('msg', () => {
-    console.log('msg');
+  if (playerLeftIsTaken == false) {
+    player = leftPlayer;
+    playerLeftIsTaken = true;
+  } else {
+    player = rightPlayer;
+  }
+
+  const side = player === leftPlayer ? 'left' : 'right';
+  socket.emit('side', side);
+
+  socket.on('b', () => (player.isBoosting = true));
+  socket.on('B', () => (player.isBoosting = false));
+
+  const movePlayer = () => {
+    if (player.isBoosting)
+      player.force = {
+        x: boostStrength * Math.sin(player.angle),
+        y: -boostStrength * Math.cos(player.angle),
+      };
+  };
+
+  Events.on(engine, 'beforeUpdate', movePlayer);
+
+  socket.on('r', (angle) => {
+    Body.setAngularVelocity(player, 0);
+    Body.setAngle(player, player.angle - angle);
   });
 
   socket.on('disconnect', () => {
+    if (player === leftPlayer) playerLeftIsTaken = false;
+    Events.off(engine, 'beforeUpdate', movePlayer);
     logSocket(socket);
   });
 });

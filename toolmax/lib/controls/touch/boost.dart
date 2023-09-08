@@ -13,14 +13,11 @@ class BoostButton extends StatefulWidget {
 }
 
 class _BoostButtonState extends State<BoostButton> {
-  sendInput() {
-    widget.socket.emit('msg');
-  }
-
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: sendInput,
+      onTapDown: (_) => widget.socket.emit('b'),
+      onTapUp: (_) => widget.socket.emit('B'),
       child: Container(
         height: 250,
         decoration: BoxDecoration(

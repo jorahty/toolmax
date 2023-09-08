@@ -13,14 +13,15 @@ class Dial extends StatefulWidget {
 }
 
 class _DialState extends State<Dial> {
-  sendInput() {
-    widget.socket.emit('msg');
+  sendInput(DragUpdateDetails details) {
+    // widget.socket.emit('msg');
+    print(details.delta.dy);
   }
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: sendInput,
+      onVerticalDragUpdate: sendInput,
       child: Container(
         height: 250,
         width: 100,
