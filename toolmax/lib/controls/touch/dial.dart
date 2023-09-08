@@ -13,22 +13,22 @@ class Dial extends StatefulWidget {
 }
 
 class _DialState extends State<Dial> {
-  var isTapped = false;
+  var isActive = false;
   var dialPosition = 12.0;
 
-  onTapDown(_) {
+  onVerticalDragStart(_) {
     setState(() {
-      isTapped = true;
+      isActive = true;
     });
   }
 
-  onTapUp(_) {
+  onVerticalDragEnd(_) {
     setState(() {
-      isTapped = false;
+      isActive = false;
     });
   }
 
-  rotate(DragUpdateDetails details) {
+  onVerticalDragUpdate(DragUpdateDetails details) {
     widget.socket.emit('r', (details.delta.dy / 50).toStringAsFixed(3));
     setState(() {
       dialPosition += details.delta.dy;
@@ -43,14 +43,14 @@ class _DialState extends State<Dial> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onVerticalDragStart: onTapDown,
-      onVerticalDragEnd: onTapUp,
-      onVerticalDragUpdate: rotate,
+      onVerticalDragStart: onVerticalDragStart,
+      onVerticalDragEnd: onVerticalDragEnd,
+      onVerticalDragUpdate: onVerticalDragUpdate,
       child: Container(
         height: 250,
         width: 100,
         decoration: BoxDecoration(
-          color: isTapped ? const Color(0xff49a581) : const Color(0xff6f8ae4),
+          color: isActive ? const Color(0xff49a581) : const Color(0xff6f8ae4),
           borderRadius: BorderRadius.circular(20),
         ),
         child: Stack(
