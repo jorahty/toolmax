@@ -55,10 +55,8 @@ class _DialState extends State<Dial> {
         ),
         child: Stack(
           children: List.generate(7, (index) {
-            // double top = 25 + (30 * index) + dialPosition;
-            double top = wrapAround(dialPosition + 30 * index, 20 - 3, 210 - 3);
             return Positioned(
-              top: top,
+              top: wrapAround(dialPosition + 30 * index, 20 - 3, 210 - 3),
               left: 25,
               child: const DialKnob(),
             );

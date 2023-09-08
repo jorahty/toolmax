@@ -11,10 +11,6 @@ class Controls extends StatelessWidget {
 
   final IO.Socket socket;
 
-  sendInput() {
-    socket.emit('msg');
-  }
-
   @override
   Widget build(BuildContext context) {
     return SafeArea(
