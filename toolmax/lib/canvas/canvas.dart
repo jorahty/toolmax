@@ -31,9 +31,9 @@ class CanvasGame extends FlameGame with MouseMovementDetector {
       ..viewfinder.zoom = zoom;
     addAll([world, cameraComponent]);
 
-    ball = Ball();
-    leftPlayer = Player(color: const Color(0xff49a581));
-    rightPlayer = Player(color: const Color(0xff6f8ae4));
+    ball = Ball()..y = 1000;
+    leftPlayer = Player(color: const Color(0xff49a581))..y = 1000;
+    rightPlayer = Player(color: const Color(0xff6f8ae4))..y = 1000;
     myPlayer = leftPlayer;
 
     world.addAll([Arena(), ball, leftPlayer, rightPlayer]);

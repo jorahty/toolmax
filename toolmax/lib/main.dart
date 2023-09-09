@@ -90,7 +90,16 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Expanded(child: ClipRect(child: GameWidget(game: _game))),
+        Expanded(
+          child: ClipRect(
+            child: GameWidget(
+              game: _game,
+              loadingBuilder: (context) => const Center(
+                child: CircularProgressIndicator(),
+              ),
+            ),
+          ),
+        ),
         Controls(socket: _socket),
       ],
     );
