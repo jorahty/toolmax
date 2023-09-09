@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 // ignore: library_prefixes
 import 'package:socket_io_client/socket_io_client.dart' as IO;
@@ -17,6 +18,7 @@ class _BoostButtonState extends State<BoostButton> {
 
   startBoost() {
     widget.socket.emit('b');
+    HapticFeedback.lightImpact();
     setState(() {
       isBoosting = true;
     });
@@ -24,6 +26,7 @@ class _BoostButtonState extends State<BoostButton> {
 
   stopBoost() {
     widget.socket.emit('B');
+    HapticFeedback.lightImpact();
     setState(() {
       isBoosting = false;
     });

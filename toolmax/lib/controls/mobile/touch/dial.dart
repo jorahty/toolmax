@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 // ignore: library_prefixes
 import 'package:socket_io_client/socket_io_client.dart' as IO;
@@ -17,12 +18,14 @@ class _DialState extends State<Dial> {
   var dialPosition = 12.0;
 
   onVerticalDragStart(_) {
+    HapticFeedback.lightImpact();
     setState(() {
       isActive = true;
     });
   }
 
   onVerticalDragEnd(_) {
+    HapticFeedback.lightImpact();
     setState(() {
       isActive = false;
     });
