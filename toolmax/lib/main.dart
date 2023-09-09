@@ -41,6 +41,25 @@ class _HomeState extends State<Home> {
   late IO.Socket _socket;
   late CanvasGame _game;
 
+  showError() {
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content: Row(
+          children: [
+            Icon(Icons.error_outline, color: Colors.orangeAccent),
+            SizedBox(width: 10),
+            Text('Connection Error'),
+          ],
+        ),
+        duration: Duration(days: 365),
+      ),
+    );
+  }
+
+  hideError() {
+    ScaffoldMessenger.of(context).clearSnackBars();
+  }
+
   @override
   void initState() {
     super.initState();
@@ -50,9 +69,9 @@ class _HomeState extends State<Home> {
       IO.OptionBuilder().setTransports(['websocket']).build(),
     );
 
-    _socket.onConnect((_) => print('connected'));
-    _socket.onConnectError((msg) => print('connect error: $msg'));
-    _socket.onError((msg) => print('error: $msg'));
+    _socket.onConnectError((msg) => showError());
+    _socket.onError((msg) => showError());
+    _socket.onConnect((_) => hideError());
 
     _game = CanvasGame(sendAngle: (angle) => _socket.emit('a', angle));
     _socket.on('move', _game.onMove);
