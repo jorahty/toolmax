@@ -12,8 +12,6 @@ class CanvasGame extends FlameGame with MouseMovementDetector {
 
   final void Function(String) sendAngle;
 
-  static const zoom = 0.5;
-
   late Ball ball;
   late Player leftPlayer;
   late Player rightPlayer;
@@ -28,7 +26,7 @@ class CanvasGame extends FlameGame with MouseMovementDetector {
     final world = World();
     cameraComponent = CameraComponent(world: world)
       ..viewport.position.y = -40
-      ..viewfinder.zoom = zoom;
+      ..viewfinder.zoom = 0.5;
     addAll([world, cameraComponent]);
 
     ball = Ball()..y = 1000;
@@ -50,9 +48,17 @@ class CanvasGame extends FlameGame with MouseMovementDetector {
     ball.angle = poses[8];
 
     // move camera
-    double target = (myPlayer == leftPlayer ? poses[0] : poses[3]) * -zoom;
+    double target = (myPlayer == leftPlayer ? poses[0] : poses[3]) *
+        -cameraComponent.viewfinder.zoom;
     double current = cameraComponent.viewport.position.x;
     cameraComponent.viewport.position.x = current + (target - current) * 0.1;
+
+    // camera zoom
+    // final distance = myPlayer.position.distanceTo(ball.position);
+    // double targetZoom = -0.0001 * distance + 0.6;
+    // double currentZoom = cameraComponent.viewfinder.zoom;
+    // cameraComponent.viewfinder.zoom =
+    //     currentZoom + (targetZoom - currentZoom) * 0.1;
   }
 
   void assignSide(side) {
@@ -62,12 +68,13 @@ class CanvasGame extends FlameGame with MouseMovementDetector {
   @override
   void onMouseMove(PointerHoverInfo info) {
     final screenCenter = Vector2(
-      -cameraComponent.viewport.position.x / zoom,
-      -cameraComponent.viewport.position.y / zoom,
+      -cameraComponent.viewport.position.x / cameraComponent.viewfinder.zoom,
+      -cameraComponent.viewport.position.y / cameraComponent.viewfinder.zoom,
     );
 
-    final inGameMousePosition =
-        screenCenter - canvasSize + info.eventPosition.game / zoom;
+    final inGameMousePosition = screenCenter -
+        canvasSize +
+        info.eventPosition.game / cameraComponent.viewfinder.zoom;
 
     final diff = inGameMousePosition - myPlayer.position;
     final angle = diff.screenAngle();
